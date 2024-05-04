@@ -1,0 +1,19 @@
+/* Añade estilos personalizados para el formulario */
+.form-group {
+    margin-bottom: 1.5rem;
+  }
+  
+  label {
+    font-weight: bold;
+  }
+  
+  /* Ajusta el tamaño del botón Cancelar */
+  .btn-secondary {
+    font-size: 1rem;
+  }
+  
+  /* Ajusta el tamaño del botón Actualizar */
+  .btn-primary {
+    font-size: 1rem;
+  }
+  

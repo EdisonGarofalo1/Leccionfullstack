@@ -1,10 +1,14 @@
 import { Injectable } from '@angular/core';
 import { of, Observable, throwError } from 'rxjs';
-import {HttpClient, HttpErrorResponse, HttpHeaders, HttpParams} from '@angular/common/http'
+import {HttpClient, HttpErrorResponse} from '@angular/common/http'
 import { catchError, map, tap } from 'rxjs/operators';
 import { environment } from 'src/environments/environments';
-import { AuthResponse, User } from 'src/app/core/model/User';
-import { Personas } from 'src/app/core/model/personas';
+
+
+import { ResponseData } from 'src/app/core/model/Response';
+import { Persona, User } from 'src/app/core/model/User';
+import { Sesion } from 'src/app/core/model/Sesion';
+
 
 @Injectable({
   providedIn: 'root'
@@ -36,41 +40,45 @@ export class AuthService {
           );
     
   }
-  // login(username:string, password:string):Observable<AuthResponse>{
-
-  //      const url  = `${ this.baseUrl }sesion/login/`;
-  //   const body = { username, password };
-
-  //   return this.http.post<AuthResponse>( url, body )
-  //     .pipe(
-  //       tap( resp => {
-  //         if ( resp.password ) {
-  //           console.log("lo que trea el longin",resp.message)
-           
-  //         }
-  //       }),
-  //       map( resp => resp.message ),
-  //       catchError( err => of(err.error.msg) )
-  //     );
-  
-  // }
-
-
-
-  // login(parametro1:string, parametro2:string): Observable<AuthResponse> {
-  //   return this.http.post<any>(`${this.baseUrl}sesion/login`, credentials);
-  // }
+  Login(username:string,password:string){
+    const requestData = { usuariomail: username ,
+      password:password
+    }; 
+    return this.http.post<ResponseData>(this.baseUrl + 'sesion/login', requestData).pipe(
+          catchError(this.handleError)
+          );
+  }
 
   
-  login(param1: string, param2: number): Observable<any> {
-    const url = `${this.baseUrl}/sesion/login`;
-    let params = new HttpParams()
-      .set('usernameOrEmail', param1)
-      .set('password', param2);
-    return this.http.post<any>(url, null, { params: params });
+  getPersona():Observable<Persona[]>{
+
+  
+    return this.http.get<any>(`${this.baseUrl}persona/listar`).pipe(
+      map((response) => response.data.listpersonas as Persona[])
+    ).pipe(
+      catchError(this.handleError)
+  );
+    }
+
+
+  updateUser(id:number,data:User):Observable<ResponseData>{
+
+    return  this.http.put<ResponseData>(this.baseUrl + 'usuario/editar/'+ id, data).pipe(
+      catchError(this.handleError)
+      );
   }
 
 
+  createUser(data:User):Observable<ResponseData>{
+
+    return  this.http.post<ResponseData>(this.baseUrl + 'usuario/crear', data).pipe(
+      catchError(this.handleError)
+      );
+  }
+
+  
+
+  
   validarToken(): Observable<boolean> {
 
     if ( !localStorage.getItem('token') ) {
@@ -85,30 +93,54 @@ export class AuthService {
 
 
 
-  getpassword(nombre:String):Observable<AuthResponse>{
 
   
-  return this.http.get<AuthResponse>(`${this.baseUrl}sesion/password/${nombre}`).pipe(
+  getUser():Observable<User[]>{
+
+  
+    return this.http.get<any>(`${this.baseUrl}usuario/listar`).pipe(
+      map((response) => response.data.listusuario as User[])
+    ).pipe(
       catchError(this.handleError)
   );
-  }
-
-
-  
-  getPersonas():Observable<Personas[]>{
-
-  
-    return this.http.get<Personas[]>(`${this.baseUrl}persona/listar`).pipe(
-        catchError(this.handleError)
-    );
     }
 
-    getPersonasid(id:number):Observable<Personas>{
+    getUserid(id:number):Observable<User>{
 
   
-      return this.http.get<Personas>(`${this.baseUrl}persona/ver/${id}`).pipe(
+      return this.http.get<any>(`${this.baseUrl}usuario/ver/${id}`).pipe(
+        map((response) => response.data.usuario as User)
+      ).pipe(
+        catchError(this.handleError)
+    );
+      }
+
+      BuscarporIdentificacion(identificacion:String):Observable<Sesion[]>{
+        const requestData = { identificacion: identificacion }; 
+  
+        return this.http.post<any>(this.baseUrl +'sesion/buscarHistorialSesiones',requestData).pipe(
+          map((response) => response.data.Usuario as Sesion[])
+        ).pipe(
           catchError(this.handleError)
       );
+        }
+
+  
+
+      recuperarpassword(username: string): Observable<ResponseData> {
+        const requestData = { userName: username }; 
+      
+        return this.http.post<ResponseData>(this.baseUrl + 'sesion/password', requestData).pipe(
+          catchError(this.handleError)
+        );
+      }
+
+      logout(username:string){
+        const requestData = { usuariomail: username 
+        }; 
+        return this.http.post<ResponseData>(this.baseUrl + 'sesion/logout', requestData).pipe(
+              catchError(this.handleError)
+              );
       }
   
 }

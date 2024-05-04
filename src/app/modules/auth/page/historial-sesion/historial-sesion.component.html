@@ -1,0 +1,38 @@
+
+<div class="card">
+  <div class="card-body">
+    <h1 class="titulo">Historial de sesiones</h1>
+
+    <form class="search-form" (submit)="buscar()">
+      <div class="input-group">
+        <input type="text" class="form-control" [(ngModel)]="searchTerm" name="searchTerm" placeholder="Buscar...">
+        <div class="input-group-append">
+          <button type="submit" class="btn btn-primary">Buscar</button>
+        </div>
+      </div>
+    </form>
+
+    <div class="table-responsive">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>ID</th>
+            <th>Nombres</th>
+            <th>Fecha de Ingreso</th>
+            <th>Fecha de Cierre</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let list of listaSesion; let i = index">
+            <td>{{i+1}}</td>
+            <td>{{list.idSesion}}</td>
+            <td>{{ list.usuario.persona.nombres + ' ' + list.usuario.persona.apellidos }}</td>
+            <td>{{list.fechaIngreso}}</td>
+            <td>{{list.fechaCierre}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

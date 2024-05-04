@@ -1,0 +1,34 @@
+<div class="container">
+  <h1>{{ (nuevaPersona.idPersona) ? 'Editar Persona' : 'Nueva Persona' }}</h1>
+  <form (ngSubmit)="Guardar()" class="form">
+  
+    <div class="form-group">
+      <label for="nombres">Nombres:</label>
+      <input type="text" id="nombres" class="form-control" [(ngModel)]="nuevaPersona.nombres" name="nombres" required>
+      <div *ngIf="!nuevaPersona.nombres" class="error-message">El nombre de la persona es requerido</div>
+    </div>
+  
+    <div class="form-group">
+      <label for="apellidos">Apellidos:</label>
+      <input type="text" id="apellidos" class="form-control" [(ngModel)]="nuevaPersona.apellidos" name="apellidos" required>
+      <div *ngIf="!nuevaPersona.apellidos" class="error-message">El apellido de la persona es requerido</div>
+    </div>
+  
+    <div class="form-group">
+      <label for="identificacion">Identificación:</label>
+      <input type="text" id="identificacion" class="form-control" [(ngModel)]="nuevaPersona.identificacion" name="identificacion" required>
+    </div>
+  
+    <div class="form-group">
+      <label for="fechaNacimiento">Fecha de Nacimiento:</label>
+      <input type="date" id="fechaNacimiento" class="form-control" [(ngModel)]="nuevaPersona.fechaNacimiento" name="fechaNacimiento" required>
+    </div>
+  
+    <div class="button-group">
+      <button type="button" class="btn btn-danger" (click)="salir()">Cancelar</button>
+      <button type="submit" class="btn btn-primary">{{ (nuevaPersona.idPersona) ? 'Actualizar' : 'Crear' }}</button>
+    
+    </div>
+  </form>
+</div>
+

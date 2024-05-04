@@ -6,6 +6,8 @@ import { AddComponent } from './page/add/add.component';
 import { LoginComponent } from './page/login/login.component';
 import { AuthRoutingModule } from './auth-routing.module';
 import { PasswordComponent } from './page/password/password.component';
+import { HistorialSesionComponent } from './page/historial-sesion/historial-sesion.component';
+
 
 
 
@@ -16,6 +18,8 @@ import { PasswordComponent } from './page/password/password.component';
     AddComponent,
     LoginComponent,
     PasswordComponent,
+    HistorialSesionComponent,
+   
 
   ],
   imports: [

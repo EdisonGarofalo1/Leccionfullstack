@@ -1,59 +1,48 @@
-
-
-
-<form [formGroup]="fromAuth" (ngSubmit)="Guardar()" class="container mt-4">
-    <h1>
-      {{  'Editar Persona'  }}      
-    
-  </h1>
-  <!-- <input type="text" hidden formControlName="id" id="id" class="form-control"> -->
+<div class="container">
+  <h1>{{ (userData.idUsuario) ? 'Editar Usuario' : 'Nuevo Usuario' }}</h1>
+  <form (ngSubmit)="Guardar()" class="form">
   
-    <div class="row">
-        <div class="col-md-6">
-    <div >
-        <div class="form-group">
-          <label for="nombres">nombres:</label>
-          <input type="text" formControlName="nombres" id="nombres" class="form-control">
-          
-        </div>
-        
-        <div class="form-group">
-          <label for="identificacion">identificacion:</label>
-          <input type="text" formControlName="identificacion" id="identificacion" class="form-control">
-        </div>
-      </div>
-
-    </div>
-
-
-    <div class="col-md-6">
     <div class="form-group">
-      <label for="fechaNacimiento">fechaNacimiento:</label>
-      <input type="date" formControlName="fechaNacimiento" id="fechaNacimiento" class="form-control">
+      <label for="userName">Nombre de Usuario:</label>
+      <input type="text" id="userName" class="form-control" [(ngModel)]="userData.userName" name="userName" required>
     </div>
-    
+  
     <div class="form-group">
-      <label for="apellidos">apellidos:</label>
-      <input type="text" formControlName="apellidos" id="apellidos" class="form-control">
+      <label for="password">Contraseña:</label>
+      <input type="password" id="password" class="form-control" [(ngModel)]="userData.password" name="password" required>
     </div>
+  
+    <div class="form-group">
+      <label for="personaId">Persona:</label>
+  
+      <select [disabled]=" (userData.idUsuario) ? true : false" id="idPersona" class="form-control"  name="idPersona" [(ngModel)]="userData.persona.idPersona" class="form-select">
+        <option *ngFor="let persona of listaPersona" [value]="persona.idPersona">{{persona.nombres}}</option>
+      </select>
     
-</div>
-
-
-
-
-
-</div>
-<br>
-<div class="row mt-3">
-    <div class="col-md-2">
-        <button type="button" class="btn btn-danger" (click)="salir()">Cancelar</button>
-      
     </div>
-    <div class="col-md-2">
-      <button type="submit" class="btn btn-primary" [disabled]="fromAuth.invalid" >  {{  'Actualizar'  }}</button>
+  
+    <div class="form-group">
+      <label for="status">Estado:</label>
+      <select id="status" class="form-control" [(ngModel)]="userData.status" name="status" required>
+        <option value="A">Activo</option>
+        <option value="I">Inactivo</option>
+      </select>
     </div>
-   
-</div>
+  
 
+ 
+    <div class="form-group">
+      <label for="rolId">Rol:</label>
+      <select  id="idRol" class="form-control"  name="rolId" [(ngModel)]="userData.roles[0].idRol" class="form-select">
+        <option *ngFor="let l of rol" [ngValue]="l.id">{{l.nombre}}</option>
+      </select>
+    </div>
+  
+    <div class="button-group">
+      <button type="button" class="btn btn-danger" (click)="salir()">Cancelar</button>
+      <button type="submit" class="btn btn-primary">{{ (userData.idUsuario) ? 'Actualizar' : 'Crear' }}</button>
+    
+    </div>
   </form>
+</div>
+

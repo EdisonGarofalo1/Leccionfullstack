@@ -10,24 +10,35 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" *ngIf="logueado" routerLink="/auth/auth/list">User</a>
+            <a class="nav-link" *ngIf="logueado && rol === 'Administrador'" routerLink="/auth/auth/list">User</a>
+      
           </li>
+
+          <li class="nav-item">
+            <a class="nav-link" *ngIf="logueado && rol === 'Administrador'" routerLink="/home/persona/list">Persona</a>
+          </li>
+       
+          <li class="nav-item">
+            <a class="nav-link"  *ngIf="logueado && rol === 'Administrador'|| (logueado && rol === 'Asistente Administrativo')" routerLink="/auth/auth/sesion">Historial de Sesiones</a>
+          </li>
+       
        
 
           
         </ul>
         <form class="d-flex">
-          <input class="form-control me-2" type="text" placeholder="Search">
+        
           <button class="btn btn-primary" type="button" (click)="Salir()">Salir</button>
         </form>
+     
       </div>
     </div>
   </nav>
   
   <div class="container p-5">
-    
+    <p class="bienvenido">Bienvenido</p>
+    <p class="nombre"> {{ nombre }}</p> 
     <router-outlet></router-outlet>
-    
       </div>
 
 

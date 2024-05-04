@@ -1,17 +1,26 @@
 import { Component } from '@angular/core';
 import Swal from 'sweetalert2'
-import { Personas } from 'src/app/core/model/personas';
+
 import { AuthService } from '../../service/auth.service';
+import { User } from 'src/app/core/model/User';
+
 
 @Component({
   selector: 'app-list',
-  templateUrl: './list.component.html',
-  styleUrls: ['./list.component.css']
+  templateUrl: './list.component.html'
+
 })
 export class ListComponent {
 
-  listaUser: Personas [] =[];
+   listaUser: User [] =[];
   logueado: boolean = false;
+  estados = [
+    { codigo: 'A', significado: 'Activo' },
+    { codigo: 'I', significado: 'Inactivo' },
+    { codigo: 'B', significado: 'Bloqueado' },
+    { codigo: 'E', significado: 'Eliminado' }
+  ];
+  
 
    constructor( private _AuthService: AuthService){
    }
@@ -31,32 +40,28 @@ export class ListComponent {
    }
    cargarUsers(){
 
-    this._AuthService.getPersonas().subscribe( resp=> {this.listaUser=resp;
-      
-      console.log("listaxxxx:",this.listaUser);})
+    this._AuthService.getUser().subscribe( resp=> {this.listaUser=resp;})
 
    }
 
-   deleteUser(id:number){
+   GuardarEstado(data:User){
     
-//     this._AuthService.deleteUser(id).subscribe({next :resp=>{
-
-//       console.log("respuesta del servidor",resp)
-//       Swal.fire("Exito",'Se Elimino Existosamente','success')
-//       this.cargarUsers();
     
+   this._AuthService.updateUser(data.idUsuario,data).subscribe({
+    next:resp=>{ 
+     Swal.fire("Exito",'Los Datos se Actualizado Corretamente','success')
+  
+   },error:error=>{
+Swal.fire("Error",error,'error')
+     
+    
+   }
 
-// },
-// error:error=>{
-// Swal.fire("Error",error,'error')
-      
-//       console.log("Hubo un error!",error)
-//     }
-  
-  
-//   })
+})
 
    }
+
+
 
 
 }

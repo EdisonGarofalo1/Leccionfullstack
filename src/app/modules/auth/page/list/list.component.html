@@ -1,61 +1,53 @@
-
 <div class="card">
-    <div class="card-body"  >
-      <br>
-      <h1 class="titulo"> Lista personas activas e inactivas </h1>
-  
-  <br>
- 
-  <br>
-      <table class="table table-hover">
-  
-  
-      <thead>
-        <tr class="table-dark">
-          <th >#</th>
-          <th >id</th>
-          <th >Nombre</th>
-          <th >Apellidos</th>
-          
-          <th >Identificacion</th>
-          <th >fecha Nacimiento</th>
-          
-          <th>Editar</th>
-          
-        </tr>
-  
-      
-      </thead>
-      <tbody>
-        <tr *ngFor=" let list of listaUser; let i= index" >
+  <div class="card-body">
+    <h1 class="titulo">Usuarios</h1>
+    <td style="width: 10%;">
+   
+      <button *ngIf="logueado" routerLink="/auth/auth/create" class="btn btn-primary btn-sm float-end">Nuevo Usuario</button>
+     
+      </td>
+    <div class="table-responsive">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Nombre</th>
+            <th>Apellidos</th>
+            <th>Nombre de Usuario</th>
+            <th>Correo Electrónico</th>
+            <th>Estado</th>
+            <th>Guardar</th>
+            <th>Editar</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let user of listaUser; let i = index">
             <td>{{i+1}}</td>
-          <td>{{list.idPersona}}</td>
-          <td>{{list.nombres}}  </td>
-          <td>{{list.apellidos}}</td>
-          <td>{{list.identificacion}}</td>
-          <td>{{list.fechaNacimiento}}</td>
        
-          
-
-           
-          
-          <td style="width: 10%;" >
-            <button routerLink="/auth/auth/edit/{{list.idPersona}}" class="btn btn-primary btn-sm float-end">Editar</button>
-          
-          </td>
-        
-         
-       
-        
-    
-        </tr>
-        
-       
-      </tbody>
-      
-    </table>
-
-</div>
+            <td>{{user.persona.nombres}}</td>
+            <td>{{user.persona.apellidos}}</td>
+            <td>{{user.userName}}</td>
+            <td>{{user.mail}}</td>
+            <td>
+              <select [(ngModel)]="user.status" class="form-select">
+                <option *ngFor="let estado of estados" [value]="estado.codigo">{{estado.significado}}</option>
+              </select>
+            
+            </td>
+            <td>
+              <button class="btn btn-success btn-sm" (click)="GuardarEstado(user)">Guardar</button>
+            </td>
+            <td>
+              <button routerLink="/auth/auth/edit/{{user.idUsuario}}" class="btn btn-primary btn-sm">Editar</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
-    
+</div>
+
+
+
+
 

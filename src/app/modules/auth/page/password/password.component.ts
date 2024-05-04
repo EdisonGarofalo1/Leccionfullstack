@@ -4,8 +4,9 @@ import { Router } from '@angular/router';
 
 import Swal from 'sweetalert2';
 
-import { User } from 'src/app/core/model/User';
+
 import { AuthService } from '../../service/auth.service';
+import { Send } from 'src/app/core/model/Send';
 
 @Component({
   selector: 'app-password',
@@ -15,34 +16,45 @@ import { AuthService } from '../../service/auth.service';
 export class PasswordComponent {
 
   constructor(private _router:Router, private _AuthService:AuthService){}
-  usuario:User={
-    usernameOrEmail: 'johnd',
+  usuario:Send={
+    userName: '',
     password: ''
   }
   recuperar(){
 
-console.log(this.usuario.usernameOrEmail,this.usuario.password);
-     this._AuthService.getpassword(this.usuario.usernameOrEmail!).subscribe(res =>{
-   console.log("resp",res)
-      if(res.password !==null){
-        
-        Swal.fire({
-          icon: 'success',
-          title: 'Recuperación Exitosa',
-          html: `Contraseña recuperada: <strong>${res.password}</strong>`
-        });
+if(this.usuario.userName === ''){
+  Swal.fire('Error', 'Debe ingresar su correo o usuario.', 'error');
 
-        } else {
-          Swal.fire('Error', res.message, 'error');
-        }
+  return;
 
-     } )
+}
+
+this._AuthService.recuperarpassword(this.usuario.userName!).subscribe(res => {
+  if (res.data && res.data['user']) 
+    { 
+    const password = res.data['user'].password; 
     
+    Swal.fire({
+      icon: 'success',
+      title: 'Recuperación Exitosa',
+      html: `Contraseña recuperada: <strong>${password}</strong>`
+    });
+  } else {
+    Swal.fire('Error', 'No se encontró la contraseña.', 'error');
   }
+}, error => {
 
-  Longi(){
+  Swal.fire('Error', 'Ocurrió un error al recuperar la contraseña.', 'error');
+});
+}
+
+Longin(){
 
   this._router.navigateByUrl('/auth/login');
 
 }
-}
+
+  }
+
+  
+

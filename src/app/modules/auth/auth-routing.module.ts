@@ -6,6 +6,7 @@ import { ValidarTokenGuard } from 'src/app/core/guards/auth.guard';
 import { ListComponent } from './page/list/list.component';
 import { AddComponent } from './page/add/add.component';
 import { PasswordComponent } from './page/password/password.component';
+import { HistorialSesionComponent } from './page/historial-sesion/historial-sesion.component';
 
 
 
@@ -31,6 +32,9 @@ export const routes: Routes = [
    { path: 'list', component: ListComponent },
    { path: 'create', component: AddComponent },
    { path: 'edit/:id', component: AddComponent },
+   { path: 'sesion', component: HistorialSesionComponent },
+
+   
    
  ]
  },

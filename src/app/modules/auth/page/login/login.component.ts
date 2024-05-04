@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { AuthService } from '../../service/auth.service';
-import { User } from 'src/app/core/model/User';
+
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
@@ -14,65 +14,45 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 export class LoginComponent {
 
   loginForm: FormGroup;
-  constructor(private _router:Router, private _AuthService:AuthService,private FB: FormBuilder){
-
-
-    
+  constructor(private _router:Router, private _AuthService:AuthService,private FB: FormBuilder){ 
   this.loginForm= this.FB.group({
-  
- 
-    username:['Juanperesrr1',[Validators.required]],
-    password:['123ww22132132E@',[Validators.required]],
-    
-  
+    userName:['JuanAlberto1',[Validators.required]],
+    password:['12345678nJ@',[Validators.required]],
   })
-
-
-
-  }
-
-
-
- 
-  // usuario:User={
-  //   username: 'Juanperesrr1',
-  //   password: '123ww22132132E@'
-  // }
+  }  
   login(){
 
-    if (this.loginForm.valid) {
     
-
-      console.log(this.loginForm.value.username,this.loginForm.value.password);
-     this._AuthService.login(this.loginForm.value.username,this.loginForm.value.password).subscribe(res =>{
-   console.log("respssss",res)
-      if(res.password !==null){
-
-        localStorage.setItem('token', res.password! );
+    if(this.loginForm.value.userName === '' && this.loginForm.value.password ) {
+      Swal.fire("Error", "Debe ingresar Usuario y contraseña", 'error');
+      return;
+    }
+    if (this.loginForm.valid) {
+     
+     this._AuthService.Login(this.loginForm.value.userName,this.loginForm.value.password).subscribe(
+      res =>{
+      if(res.code !==null){
+        localStorage.setItem('token', res.code! );
+        localStorage.setItem('Data', JSON.stringify(res.data) );
+        localStorage.setItem('username', res.data['user'].userName);
         this._router.navigateByUrl('/home');
-        console.log("si  igreos")
-      
-       
-        
+     
+     
         } else {
+     
           Swal.fire('Error', res.message, 'error');
         }
-
      } )
-
-    } else {
-      
+    } else { 
+ 
       Swal.fire({
         icon: 'error',
         title: 'Error',
         text: 'Por favor, completa todos los campos.'
       });
-    }
-    
+    } 
   }
-
-
-  recuperar(){
-    this._router.navigateByUrl('/auth/password');
+  recuperarPassword(){
+     this._router.navigateByUrl('/auth/password');
   }
 }

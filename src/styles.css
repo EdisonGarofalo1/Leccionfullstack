@@ -1,1 +1,10 @@
 /* You can add global styles to this file, and also import other style files */
+.bienvenido {
+    font-size:56px; /* Tamaño de fuente grande para "Bienvenido" */
+    font-weight: bold; /* Texto en negrita */
+    margin-bottom: 5px; /* Margen inferior pequeño para separar "Bienvenido" del nombre */
+  }
+  
+  .nombre {
+    font-size: 18px; /* Tamaño de fuente más pequeño para el nombre */
+  }

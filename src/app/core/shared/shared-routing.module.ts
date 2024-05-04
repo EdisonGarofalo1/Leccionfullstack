@@ -3,9 +3,12 @@ import { RouterModule, Routes } from '@angular/router';
 
 
 
-const routes: Routes = [
+const routes: Routes = [ 
+  {
+    path:'persona',
+    loadChildren:()=> import('../../modules/persona/persona.module').then(m=>m.PersonaModule)
 
-  
+  }
 
 ];
 

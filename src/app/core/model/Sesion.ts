@@ -1,4 +1,11 @@
-export interface User {
+export interface Sesion {
+    idSesion:     number;
+    usuario:      Usuario;
+    fechaIngreso: Date;
+    fechaCierre:  Date;
+}
+
+export interface Usuario {
     idUsuario:        number;
     userName:         string;
     password:         string;

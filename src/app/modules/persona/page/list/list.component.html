@@ -1,0 +1,42 @@
+<div class="card">
+  <div class="card-body">
+    <h1 class="titulo">Persona</h1>
+
+    <td style="width: 10%;">
+   
+      <button *ngIf="logueado" routerLink="/home/persona/create" class="btn btn-primary btn-sm float-end">Nuevo Persona</button>
+     
+      </td>
+    <div class="table-responsive">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>#</th>
+           
+            <th>Nombres</th>
+            <th>Apellidos</th>
+            <th>Identificacion</th>
+            <th>Editar</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let list of listaPersona; let i = index">
+            <td>{{i+1}}</td>
+         
+            <td>{{list.nombres}}</td>
+            <td>{{list.apellidos}}</td>
+            <td>{{list.identificacion}}</td>
+            <td>
+              <button routerLink="/home/persona/edit/{{list.idPersona}}" class="btn btn-primary btn-sm">Editar</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+
+
+
+
